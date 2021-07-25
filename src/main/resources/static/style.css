@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin+Sketch|Julius+Sans+One|Poiret+One&display=swap');
+h1{
+    font-family: 'Julius Sans One', sans-serif;
+}
+
+nav{
+    background-color: #331117;;
+}
+
+
+.container{
+padding:6px;
+}
+
+nav a{
+    font-size: 17px;
+    font-family: 'Julius Sans One', sans-serif;
+        padding-inline: 13%;
+        color: crimson;
+        text-decoration: none;
+}
+
+.navbar{
+   font-family: 'Cabin Sketch', cursive;
+       text-size: large;
+       padding: 36%;
+       font-size: -webkit-xxx-large;
+}
+img{
+    padding-inline: 45%;
+    width: 8%;
+    height: 4%;
+}

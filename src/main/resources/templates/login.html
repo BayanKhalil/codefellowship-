@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/style.css" rel="stylesheet"/>
+</head>
+<body>
+<header> <div th:replace="navbar :: navbar(${user})"></div></header>
+
+
+<h1>Log in</h1>
+<form action="/login" method="POST">
+  <p><label>Username:</label><input type="text" name="username" /></p>
+  <p><label>Password:</label><input type="password" name="password" /></p>
+  <input type="submit" />
+</form>
+
+<a href="/">Home</a> | <a href="/signUp">signup</a>
+</body>
+</html>

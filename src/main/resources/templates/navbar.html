@@ -1,0 +1,20 @@
+<nav th:fragment="navbar (user)" xmlns:th="">
+    <div class="container">
+
+        <ul class="nav" th:if="${user}">
+          <a href="/">Home</a>
+
+        </ul>
+        <ul class="nav" th:if="${user} == false">
+          <a href="/">Home</a>
+       <a href="/signUp">SignUp</a>
+           <a href="/login">Login</a>
+        </ul>
+
+    </div>
+    <div >
+        <a class="navbar" href="/">CodeFellowShip </a>
+        <br>
+        <img src="https://avatars.githubusercontent.com/u/3904529?s=280&v=4" width="50px" height="50px">
+    </div>
+</nav>
