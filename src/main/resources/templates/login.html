@@ -10,11 +10,13 @@
 
 
 <h1>Log in</h1>
-<form action="/login" method="POST">
+<form th:action="@{/login}" method="post">
   <p><label>Username:</label><input type="text" name="username" /></p>
   <p><label>Password:</label><input type="password" name="password" /></p>
-  <input type="submit" />
+  <input type="submit" value="Sign In" />
 </form>
+
+
 
 <a href="/">Home</a> | <a href="/signUp">signup</a>
 </body>

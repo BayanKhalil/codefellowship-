@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/style.css" rel="stylesheet"/>
+</head>
+<body>
+<header> <div th:replace="navbar :: navbar(${user})"></div></header>
+
+
+<h1>My Profile</h1>
+
+
+<h1>Welcome to <span th:text="${viewedUser.firstName}"> </span>   <span th:text="${viewedUser.lastName}"></span>'s profile</h1>
+<p>First Name: <span th:text="${viewedUser.firstName}"></span></p>
+<p>Last Name: <span th:text="${viewedUser.lastName}"></span></p>
+<p>Date of birth: <span th:text="${viewedUser.dateOfBirth}"></span></p>
+<p>Bio: <span th:text="${viewedUser.bio}"></span></p>
+
+<a href="/Logout">Logout</a>
+
+
+
+
+    <div th:if="${'/users/'+viewedUser.id}">
+
+        <h3>Create a Post</h3>
+        <form action="/addPost" method="POST">
+            <textarea placeholder="type any thing you thinking about " name="body" rows="30" cols="50"></textarea>
+            <br>
+            <input type="submit" value="post"/>
+        </form>
+    </div>
+
+
+
+
+</body>
+</html>

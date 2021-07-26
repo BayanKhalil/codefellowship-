@@ -1,11 +1,12 @@
-package com.example.codefellowship;
+package com.example.codefellowship.domain;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Date;
+
+import java.util.List;
 
 
 @Entity
@@ -24,6 +25,9 @@ public class ApplicationUser implements UserDetails{
     String bio;
 
 
+    @OneToMany(mappedBy="applicationUser")
+    public List<Post> posts;
+
     public ApplicationUser(String username, String password, String firstName, String lastName, String dateOfBirth, String bio) {
 
         this.username = username;
@@ -34,16 +38,16 @@ public class ApplicationUser implements UserDetails{
         this.bio = bio;
     }
 
-
     public ApplicationUser(){}
     public long getId() {
         return id;
     }
-    //login
-//    public ApplicationUser(String username, String password){
-//        this.username = username;
-//        this.password = password;
-//    }
+
+//  login
+    public ApplicationUser(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
 
     public void setUsername(String username) {
         this.username = username;

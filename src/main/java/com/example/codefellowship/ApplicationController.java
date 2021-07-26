@@ -1,5 +1,9 @@
 package com.example.codefellowship;
 
+import com.example.codefellowship.domain.ApplicationUser;
+import com.example.codefellowship.domain.Post;
+import com.example.codefellowship.infrastructure.ApplicationPostRepository;
+import com.example.codefellowship.infrastructure.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,11 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 
 @Controller
@@ -28,6 +34,9 @@ public class ApplicationController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    ApplicationPostRepository applicationPostRepository;
 
 
     // Get splash page
@@ -72,23 +81,42 @@ public class ApplicationController {
         ApplicationUser currentUser = applicationUserRepository.findById(id).get();
         modle.addAttribute("viewedUser",currentUser);
         modle.addAttribute("username",userDetails.getUsername());
-        return "userProfile";
+
+        return "myprofile";
     }
 
-    @GetMapping("/userProfile")
+    @GetMapping("/myprofile")
     public String getUserProfilePage( Model modle){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ApplicationUser currentUser = applicationUserRepository.findUserByUsername(userDetails.getUsername());
         modle.addAttribute("viewedUser", currentUser);
         modle.addAttribute("username",userDetails.getUsername());
         modle.addAttribute("user", true);
-        return "userProfile";
+        Iterable<Post> posts = applicationPostRepository.findAll();
+        modle.addAttribute("posts", posts);
+        return "myprofile";
     }
 
 
+//>>>>>>>>>>>>>>>>>>lab17<<<<<<<<<<<<<<<<<<<<<<
+@PostMapping("/addPost")
+public RedirectView createPost(@RequestParam  String body,Principal principal){
+//    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    ApplicationUser user = (ApplicationUser) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
 
+    Post newPost = new Post(body,new Date());
+    newPost.applicationUser = applicationUserRepository.findById(user.getId()).get();
+    applicationPostRepository.save(newPost);
 
+    return new RedirectView("/addPost");
+}
 
-
+    @GetMapping("/addPost")
+    public String showPost( Model modle){
+        Iterable<Post> posts = applicationPostRepository.findAll();
+        modle.addAttribute("posts", posts);
+        modle.addAttribute("user", true);
+        return "/addPost";
+    }
 
 }

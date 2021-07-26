@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/style.css" rel="stylesheet"/>
+</head>
+<body>
+<header> <div th:replace="navbar :: navbar(${user})"></div></header>
+<div >
+  <h3>List of post </h3>
+  <ul>
+    <li th:each="post : ${posts}">
+      <p><span th:text="${post.body}"></span> | <span th:text="${post.createdAt}"></span></p>
+    </li>
+
+  </ul>
+</div>
+
+
+</body>
+</html>

@@ -3,11 +3,13 @@
 
         <ul class="nav" th:if="${user}">
           <a href="/">Home</a>
+            <a href=${"/users/"+id}>MY PROFILE</a>
+            <a href="/Login">Logout</a>
 
         </ul>
         <ul class="nav" th:if="${user} == false">
           <a href="/">Home</a>
-       <a href="/signUp">SignUp</a>
+       <a href="@{/signUp}">SignUp</a>
            <a href="/login">Login</a>
         </ul>
 
