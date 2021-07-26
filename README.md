@@ -14,4 +14,6 @@ Go to localhost:9090
 * localhost:9090/login 
 * localhost:9090/signUp
 * localhost:9090/user/id 
-and hold error page for all type of errers
+* localhost:9090/addPost 
+* localhost:9090/error
+ hold all type of errers
