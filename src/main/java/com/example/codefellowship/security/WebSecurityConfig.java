@@ -1,6 +1,6 @@
-package com.example.codefellowship;
+package com.example.codefellowship.security;
 
-import com.example.codefellowship.UserDetailsServiceImpl;
+import com.example.codefellowship.infrastructure.UserDetailsServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -38,15 +38,17 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/" ).permitAll()
-                .antMatchers("/signUp").permitAll()
+                .antMatchers("myprofile" ).hasAnyAuthority("ApplicationUser")
+                .antMatchers("/","/signUp").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/", true)
                 .and()
-                .logout();
+                .logout()
+                .logoutUrl("/Logout");
+
     }
 
     @Override

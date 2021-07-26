@@ -1,5 +1,7 @@
-package com.example.codefellowship;
+package com.example.codefellowship.infrastructure;
 
+import com.example.codefellowship.domain.ApplicationUser;
+import com.example.codefellowship.infrastructure.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
