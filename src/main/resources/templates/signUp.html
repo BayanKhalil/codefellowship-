@@ -6,27 +6,39 @@
   <link href="/style.css" rel="stylesheet"/>
 </head>
 <body>
-<header> <div th:replace="navbar :: navbar(${user})"></div></header>
 
+<header><div th:replace="navbar :: navbar"></div></header>
+<main>
 <h1>Sign up Page</h1>
 
-<form th:action="@{/signUp}" method="POST">
+<form class="signUp" th:action="@{/signUp}" method="POST">
   <label>UserName:</label>
   <input type="text" name="username" />
+  <br>
+  <br>
   <label>Password:</label>
   <input type="password" name="password" />
+  <br>
+  <br>
   <label>First Name:</label>
   <input type="text" name="firstName" />
+  <br>
+  <br>
   <label>Last name:</label>
   <input type="text" name="lastName" />
+  <br>
+  <br>
   <label>Date of Birth:</label>
   <input type="date" name="dateOfBirth" />
+  <br>
+  <br>
   <label>Bio:</label>
   <input type="text" name="bio" />
+  <br>
+  <br>
   <input type="submit" />
 </form>
 
-<a href="/home">Home</a> | <a href="/login">Login</a>
-
+</main>
 </body>
 </html>

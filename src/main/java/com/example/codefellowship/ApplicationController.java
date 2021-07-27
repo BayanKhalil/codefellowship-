@@ -80,7 +80,7 @@ public class ApplicationController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ApplicationUser currentUser = applicationUserRepository.findById(id).get();
         modle.addAttribute("viewedUser",currentUser);
-        modle.addAttribute("username",userDetails.getUsername());
+        modle.addAttribute("user",true);
 
         return "myprofile";
     }
@@ -90,8 +90,9 @@ public class ApplicationController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ApplicationUser currentUser = applicationUserRepository.findUserByUsername(userDetails.getUsername());
         modle.addAttribute("viewedUser", currentUser);
-        modle.addAttribute("username",userDetails.getUsername());
-        modle.addAttribute("user", true);
+        modle.addAttribute("user",true);
+
+
         Iterable<Post> posts = applicationPostRepository.findAll();
         modle.addAttribute("posts", posts);
         return "myprofile";
@@ -100,22 +101,30 @@ public class ApplicationController {
 
 //>>>>>>>>>>>>>>>>>>lab17<<<<<<<<<<<<<<<<<<<<<<
 @PostMapping("/addPost")
-public RedirectView createPost(@RequestParam  String body,Principal principal){
+public RedirectView createPost(@RequestParam  String body,Principal principal,Model modle){
 //    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     ApplicationUser user = (ApplicationUser) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
 
     Post newPost = new Post(body,new Date());
     newPost.applicationUser = applicationUserRepository.findById(user.getId()).get();
     applicationPostRepository.save(newPost);
-
+    modle.addAttribute("username",user);
+    System.out.println("post>>>addpost"+user.getFirstName());
+    modle.addAttribute("user", true);
     return new RedirectView("/addPost");
 }
 
     @GetMapping("/addPost")
-    public String showPost( Model modle){
+    public String showPost( Model modle,Principal principal){
         Iterable<Post> posts = applicationPostRepository.findAll();
         modle.addAttribute("posts", posts);
-        modle.addAttribute("user", true);
+
+        ApplicationUser user = (ApplicationUser) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        System.out.println("GET>>>addpost"+user.getFirstName());
+        modle.addAttribute("username",user);
+            modle.addAttribute("user",true);
+
+
         return "/addPost";
     }
 
