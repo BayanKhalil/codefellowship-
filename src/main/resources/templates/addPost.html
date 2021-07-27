@@ -6,9 +6,10 @@
     <link href="/style.css" rel="stylesheet"/>
 </head>
 <body>
-<header> <div th:replace="navbar :: navbar(${user})"></div></header>
+<header><div th:replace="navbar :: navbar"></div></header>
+<h1>Hello <span th:text="${username.firstName}"></span></h1>
 <div >
-  <h3>List of post </h3>
+  <h3>List of  <span th:text="${username.firstName}"></span> post </h3>
   <ul>
     <li th:each="post : ${posts}">
       <p><span th:text="${post.body}"></span> | <span th:text="${post.createdAt}"></span></p>

@@ -14,7 +14,9 @@
     </style>
 </head>
 <body>
-<header> <div th:replace="navbar :: navbar(${user})"></div></header>
+
+<header><div th:replace="navbar :: navbar"></div></header>
+<main>
 <h1>ERROR PAGE</h1>
 <table>
     <tr>
@@ -48,5 +50,6 @@
         </td>
     </tr>
 </table>
+</main>
 </body>
 </html>

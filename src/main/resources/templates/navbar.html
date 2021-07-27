@@ -1,22 +1,24 @@
-<nav th:fragment="navbar (user)" xmlns:th="">
-    <div class="container">
+<section th:fragment="navbar" xmlns:th="">
 
-        <ul class="nav" th:if="${user}">
-          <a href="/">Home</a>
-            <a href=${"/users/"+id}>MY PROFILE</a>
-            <a href="/Login">Logout</a>
+    <nav th:class="user" th:if="${user}">
 
-        </ul>
-        <ul class="nav" th:if="${user} == false">
-          <a href="/">Home</a>
-       <a href="@{/signUp}">SignUp</a>
-           <a href="/login">Login</a>
-        </ul>
+        <a href="/">Home</a>
+        <a href="/users/{id}">my Profile</a>
+        <a href="/login">Logout</a>
 
-    </div>
-    <div >
-        <a class="navbar" href="/">CodeFellowShip </a>
-        <br>
-        <img src="https://avatars.githubusercontent.com/u/3904529?s=280&v=4" width="50px" height="50px">
-    </div>
-</nav>
+    </nav>
+
+
+    <nav th:class="nouser" th:unless="${user}">
+        <a href="/">home</a>
+        <a href="/login">login</a>
+        <a href="/signUp">signup</a>
+        <h1 class="navbar">Welcome to CodeFellowship</h1>
+
+    </nav>
+</section>
+
+
+
+
+

@@ -6,9 +6,10 @@
     <link href="/style.css" rel="stylesheet"/>
 </head>
 <body>
-<header> <div th:replace="navbar :: navbar(${user})"></div></header>
 
 
+<header><div th:replace="navbar :: navbar"></div></header>
+<main>
 <h1>Log in</h1>
 <form th:action="@{/login}" method="post">
   <p><label>Username:</label><input type="text" name="username" /></p>
@@ -18,6 +19,7 @@
 
 
 
-<a href="/">Home</a> | <a href="/signUp">signup</a>
+
+</main>
 </body>
 </html>
