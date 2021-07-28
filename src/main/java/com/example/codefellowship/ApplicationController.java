@@ -66,7 +66,7 @@ public class ApplicationController {
                 lastName, dateOfBirth, bio);
         applicationUserRepository.save(newUser);
         // For autologin
-        ApplicationUser user = applicationUserRepository.findUserByUsername(newUser.getUsername());
+        ApplicationUser user = applicationUserRepository.findByUsername(newUser.getUsername());
         Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null, newUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         long id = newUser.getId();
@@ -88,7 +88,7 @@ public class ApplicationController {
     @GetMapping("/myprofile")
     public String getUserProfilePage( Model modle){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        ApplicationUser currentUser = applicationUserRepository.findUserByUsername(userDetails.getUsername());
+        ApplicationUser currentUser = applicationUserRepository.findByUsername(userDetails.getUsername());
         modle.addAttribute("viewedUser", currentUser);
         modle.addAttribute("user",true);
 
@@ -127,5 +127,7 @@ public RedirectView createPost(@RequestParam  String body,Principal principal,Mo
 
         return "/addPost";
     }
+
+
 
 }

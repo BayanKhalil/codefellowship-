@@ -94,33 +94,43 @@ public class ApplicationUser implements UserDetails{
         return null;
     }
 
-    @Override
-    public String getPassword() {
-        return null;
-    }
+//    @Override
+//    public String getPassword() {
+//        return getPassword();
+//    }
+
+//    @Override
+//    public String getUsername() {
+//        return getUsername();
+//    }
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
