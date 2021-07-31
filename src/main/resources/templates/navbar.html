@@ -1,18 +1,28 @@
 <section th:fragment="navbar" xmlns:th="">
 
-    <nav th:class="user" th:if="${user}">
+    <nav th:class="user" th:if="${username}">
 
-        <a href="/">Home</a>
-        <a href="/users/{id}">my Profile</a>
+
+<!--        <a th:href="'/users/'+${username.id}">my Profile</a>-->
+
+
+        <a href="/feed">Feed</a>
+        <a href="/users">Users</a>
         <a href="/login">Logout</a>
+        <a href="/">Home</a>
+
+    </nav>
+    <nav th:class="user" th:if="${viewedUser}">
+        <a th:href="'/users/'+${viewedUser.id}" ><img th:class="icon" src="https://cdn.iconscout.com/icon/free/png-256/face-1659511-1410033.png" alt="face image" >my Profile</a>
+
 
     </nav>
 
+    <nav th:class="nouser" th:unless="${username}" >
 
-    <nav th:class="nouser" th:unless="${user}">
-        <a href="/">home</a>
-        <a href="/login">login</a>
         <a href="/signUp">signup</a>
+        <a href="/login">login</a>
+        <a href="/">home</a>
         <h1 class="navbar">Welcome to CodeFellowship</h1>
 
     </nav>

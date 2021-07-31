@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/style.css" rel="stylesheet"/>
+</head>
+<body>
+<header><div th:replace="navbar :: navbar"></div></header>
+
+
+<div class="container">
+
+
+
+  <div  th:each="alluser : ${alluser}">
+
+
+    <h2>First Name:<a th:href="${'/users/' + alluser.id}"><span th:text="${alluser.firstName}"> </span></a></h2>
+    <h2>Bio:<span th:text="${alluser.bio}"> </span></h2>
+
+
+
+    <form action="/follow" method="post">
+      <input type="hidden" name="followUser" th:value="${alluser.id}">
+      <input class="button" type="submit" value="FOLLOW" />
+    </form>
+  </div>
+</div>
+</body>
+</html>
