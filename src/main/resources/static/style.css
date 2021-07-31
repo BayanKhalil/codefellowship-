@@ -11,6 +11,8 @@
 
  background-color: #cf3328;
   padding-inline: 13%;
+  padding-top: 1%;
+
 }
 
 
@@ -21,9 +23,10 @@ padding:6px;
 nav a{
     font-size: 17px;
     font-family: 'Julius Sans One', sans-serif;
-        padding-inline: 13%;
+        padding-inline: 2%;
         color: white;
         text-decoration: none;
+         float: right;
 }
 
 .navbar{
@@ -34,7 +37,7 @@ font-family: 'Qahiri', sans-serif;
            color:white;
 }
 img{
-    padding-inline: 45%;
+
     width: 8%;
     height: 4%;
 }
@@ -55,4 +58,10 @@ font-family: 'Otomanopee One', sans-serif;
 }
 .signUp{
 align-item:center
+}
+.icon{
+
+width: 12%;
+height:4%;
+
 }

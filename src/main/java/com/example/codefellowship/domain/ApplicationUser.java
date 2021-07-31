@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -28,6 +29,8 @@ public class ApplicationUser implements UserDetails{
     @OneToMany(mappedBy="applicationUser")
     public List<Post> posts;
 
+
+    public ApplicationUser(){}
     public ApplicationUser(String username, String password, String firstName, String lastName, String dateOfBirth, String bio) {
 
         this.username = username;
@@ -38,16 +41,36 @@ public class ApplicationUser implements UserDetails{
         this.bio = bio;
     }
 
-    public ApplicationUser(){}
+
+    @ManyToMany
+    @JoinTable(
+            name="postersAndFollowers",
+            joinColumns = { @JoinColumn(name="follower") },
+            inverseJoinColumns = { @JoinColumn(name = "poster")}
+    )
+    Set<ApplicationUser> usersIFollowing;
+
+    @ManyToMany(mappedBy = "usersIFollowing" , fetch = FetchType.EAGER)
+    Set<ApplicationUser> usersFollowingMe;
+
+    public void followUser(ApplicationUser followedUser){
+
+        usersIFollowing.add(followedUser);
+    }
+
+
+    public Set<ApplicationUser> getUsersIFollowing() {
+        return usersIFollowing;
+    }
+
+    public Set<ApplicationUser> getUsersFollowingMe() {
+        return usersFollowingMe;
+    }
+
     public long getId() {
         return id;
     }
 
-//  login
-    public ApplicationUser(String username, String password){
-        this.username = username;
-        this.password = password;
-    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -94,15 +117,7 @@ public class ApplicationUser implements UserDetails{
         return null;
     }
 
-//    @Override
-//    public String getPassword() {
-//        return getPassword();
-//    }
 
-//    @Override
-//    public String getUsername() {
-//        return getUsername();
-//    }
 
     @Override
     public String getUsername() {

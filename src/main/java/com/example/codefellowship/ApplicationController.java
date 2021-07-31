@@ -22,6 +22,7 @@ import java.security.Principal;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -41,20 +42,20 @@ public class ApplicationController {
 
     // Get splash page
     @GetMapping("/")
-    public String splashPage(Model modle){
-        modle.addAttribute("user", false);
+    public String splashPage(Model model){
+        model.addAttribute("user", false);
         return "splash";
     }
 
     @GetMapping("/signUp")
-    public String getSignUpPage(Model modle) {
-        modle.addAttribute("user", false);
+    public String getSignUpPage(Model model) {
+        model.addAttribute("user", false);
         return "signUp";
     }
 
     @GetMapping("/login")
-    public String getLoginPage(Model modle) {
-        modle.addAttribute("user", false);
+    public String getLoginPage(Model model) {
+        model.addAttribute("user", false);
         return "login";
     }
 
@@ -76,58 +77,97 @@ public class ApplicationController {
 
 
     @GetMapping("/users/{id}")
-    public String getMyProfile(@PathVariable long id, Model modle){
+    public String getMyProfile(@PathVariable long id, Model model,Principal p){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ApplicationUser currentUser = applicationUserRepository.findById(id).get();
-        modle.addAttribute("viewedUser",currentUser);
-        modle.addAttribute("user",true);
+        model.addAttribute("viewedUser",currentUser);
+
+
+        model.addAttribute("username", p.getName());
 
         return "myprofile";
     }
 
     @GetMapping("/myprofile")
-    public String getUserProfilePage( Model modle){
+    public String getUserProfilePage(Principal p, Model model){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ApplicationUser currentUser = applicationUserRepository.findByUsername(userDetails.getUsername());
-        modle.addAttribute("viewedUser", currentUser);
-        modle.addAttribute("user",true);
+       model.addAttribute("viewedUser", currentUser);
+       model.addAttribute("user",true);
+       model.addAttribute("username", p.getName());
 
 
         Iterable<Post> posts = applicationPostRepository.findAll();
-        modle.addAttribute("posts", posts);
+        model.addAttribute("posts", posts);
         return "myprofile";
     }
 
 
 //>>>>>>>>>>>>>>>>>>lab17<<<<<<<<<<<<<<<<<<<<<<
 @PostMapping("/addPost")
-public RedirectView createPost(@RequestParam  String body,Principal principal,Model modle){
-//    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+public RedirectView createPost(@RequestParam  String body,Principal principal,Model model){
     ApplicationUser user = (ApplicationUser) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+    model.addAttribute("viewedUser",user);
 
     Post newPost = new Post(body,new Date());
     newPost.applicationUser = applicationUserRepository.findById(user.getId()).get();
     applicationPostRepository.save(newPost);
-    modle.addAttribute("username",user);
-    System.out.println("post>>>addpost"+user.getFirstName());
-    modle.addAttribute("user", true);
+
     return new RedirectView("/addPost");
 }
 
     @GetMapping("/addPost")
-    public String showPost( Model modle,Principal principal){
+    public String showPost( Model model,Principal principal){
         Iterable<Post> posts = applicationPostRepository.findAll();
-        modle.addAttribute("posts", posts);
+        model.addAttribute("posts", posts);
 
         ApplicationUser user = (ApplicationUser) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
-        System.out.println("GET>>>addpost"+user.getFirstName());
-        modle.addAttribute("username",user);
-            modle.addAttribute("user",true);
+        model.addAttribute("viewedUser",user);
 
+        model.addAttribute("username", principal.getName());
 
         return "/addPost";
     }
 
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>lab18<<<<<<<<<<<<<<<<<<<<<<<
 
+    @GetMapping("/users")
+    public String getAllUsers(Principal principal, Model model) {
+
+        model.addAttribute("alluser", applicationUserRepository.findAll());
+        model.addAttribute("username", principal.getName());
+
+        return "Users";
+    }
+    @PostMapping ("/follow")
+    public RedirectView followAUser(Principal principal, long followUser) {
+
+        // user to follow and get current logged in user username
+        ApplicationUser poster = applicationUserRepository.getById(followUser);
+
+        // get current logged in user username
+        ApplicationUser follower = applicationUserRepository.findByUsername(principal.getName());
+        // add the curetn logged in user to the following of usertofollow
+//        add usertofollow to current logged in user followers
+        follower.followUser(poster);
+
+        applicationUserRepository.save(follower);
+
+        return new RedirectView("/myprofile");
+    }
+
+    @GetMapping("/feed")
+    public String Feed(Principal principal, Model model) {
+
+
+        ApplicationUser currentUser = applicationUserRepository.findByUsername(principal.getName());
+
+        Set<ApplicationUser> followerList = currentUser.getUsersIFollowing();
+
+        model.addAttribute("personThatIfollowList", followerList);
+
+        model.addAttribute("username", principal.getName());
+        return "feed";
+    }
 
 }

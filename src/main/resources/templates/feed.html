@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+  <div th:replace="navbar :: navbar"></div>
+
+
+  <th:block  th:each="user: ${personThatIfollowList}">
+      <h1 ><a th:href="${'/users/' + user.id}"><span th:text="${user.username}"> </span></a></h1>
+    <th:block th:each="post: ${user.posts}">
+      <p id="createdAt" th:text="${post.createdAt}"></p>
+      <p th:text="${post.body}"></p>
+    </th:block>
+  </th:block>
+</div>
+</body>
+</html>
