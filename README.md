@@ -10,10 +10,11 @@ built with
 Go to localhost:9090
 
 ## Routes
-* localhost:9090/ 
+* localhost:9090/ >> Home page
 * localhost:9090/login 
 * localhost:9090/signUp
-* localhost:9090/user/id 
-* localhost:9090/addPost 
-* localhost:9090/error
- hold all type of errers
+* localhost:9090/addPost >> add posts from your profile 
+* localhost:9090/users >> a user can discover other users on the service 
+* localhost:9090/feed  >> view all of the posts from the users that they follow
+* localhost:9090/error >> hold all type of errors
+ 
